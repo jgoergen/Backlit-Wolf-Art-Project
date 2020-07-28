@@ -1,6 +1,3 @@
-// http://colorschemedesigner.com/csd-3.5/
-// https://www.mathsisfun.com/hexadecimal-decimal-colors.html
-
 #include <Adafruit_NeoPixel.h>
 
 #define PIN            4
@@ -46,24 +43,22 @@ int colorScheme[] =
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
-
-  pixels.begin(); // This initializes the NeoPixel library.
+  
+  pixels.begin();
   pixels.setBrightness(250);
   changeStyle();
 }
 
 void loop() {
 
-  if ((millis() - displayChangeTime) >= (60000 * 1)) { // 60 s * m
+  if ((millis() - displayChangeTime) >= (60000 * 1)) {
 
-    // change colors
-    
+    // change colors    
     changeStyle();
     displayChangeTime = millis();
   }
 
   // fade colors towards targets
-
   r1 = moveTowards(r1, tr1, 1);
   g1 = moveTowards(g1, tg1, 1);
   b1 = moveTowards(b1, tb1, 1);
@@ -71,12 +66,10 @@ void loop() {
   g2 = moveTowards(g2, tg2, 1);
   b2 = moveTowards(b2, tb2, 1);  
 
-  // display them
-  
+  // display them  
   pixels.setPixelColor(0, pixels.Color(r1, g1, b1));
   pixels.setPixelColor(1, pixels.Color(r2, g2, b2));
   pixels.show();
-      
   delay(66);
 }
 
@@ -119,21 +112,29 @@ void changeStyle() {
 
 int moveTowards(int current, int target, int changeSpeed) {
 
-  if (current < target)
+  if (current < target) {
+    
     return current += changeSpeed;
-  else if (current > target)
+  
+  } else if (current > target) {
+  
     return current -= changeSpeed;
+  }
 
   return target;
 }
 
 int fixVal(int val) {
 
-  while (val >= 255)
+  while (val >= 255) {
+    
     val -= 255;
+  }
 
-  while (val < 0) 
+  while (val < 0) {
+    
     val += 255;
-
+  }
+  
   return val;
 }
